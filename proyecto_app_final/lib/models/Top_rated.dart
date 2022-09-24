@@ -3,6 +3,7 @@
 //     final topRated = topRatedFromMap(jsonString);
 
 import 'dart:convert';
+import 'package:proyecto_app_final/models/model.dart';
 
 class TopRated {
   TopRated({
@@ -13,7 +14,7 @@ class TopRated {
   });
 
   int page;
-  List<Result> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
@@ -22,7 +23,7 @@ class TopRated {
   factory TopRated.fromMap(Map<String, dynamic> json) => TopRated(
         page: json["page"] == null ? null : json["page"],
         results:
-            List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
+            List<Movie>.from(json["results"].map((x) => Result.fromMap(x))),
         totalPages: json["total_pages"] == null ? null : json["total_pages"],
         totalResults:
             json["total_results"] == null ? null : json["total_results"],

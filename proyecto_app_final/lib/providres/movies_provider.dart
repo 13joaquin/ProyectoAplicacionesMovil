@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_app_final/helpers/debouncer.dart';
-import 'package:proyecto_app_final/models/credits.dart';
 import 'package:proyecto_app_final/models/Top_rated.dart';
+import 'package:proyecto_app_final/models/credits.dart';
+import 'package:proyecto_app_final/models/reviews.dart';
 import 'package:proyecto_app_final/models/model.dart';
 import 'package:proyecto_app_final/models/popular.dart';
 import 'package:http/http.dart' as http;
@@ -16,10 +17,12 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+  List<Movie> topVota = [];
 
   Map<int, List<Cast>> moviesCast = {};
 
   int _popularPage = 0;
+  int _topRade = 0;
 
   final debouncer = Debouncer(
     duration: Duration(milliseconds: 500),
@@ -64,6 +67,14 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getToRade() async {
+    _topRade++;
+    final jsonData = await this._getJsonData('3/movie/top_rated', _topRade);
+    final topResponse = TopRated.fromJson(jsonData);
+    topVota = [...topVota, ...topResponse.results];
+    notifyListeners();
+  }
+
   Future<List<Cast>> getMovieCast(int movieId) async {
     if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
 
@@ -104,7 +115,7 @@ class MoviesProvider extends ChangeNotifier {
     if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
 
     final jsonData = await this._getJsonData('3/movie/$movieId/top_rated');
-    final creditsResponse = TopRated.fromJson(jsonData);
+    final creditsResponse = Reviews.fromJson(jsonData);
 
     moviesCast[movieId] = creditsResponse.cast;
 

@@ -1,4 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:proyecto_app_final/models/movie.dart';
+import 'package:proyecto_app_final/screens/home_screen.dart';
 
 class Pintar extends StatefulWidget {
   @override
@@ -16,8 +20,11 @@ class _PintarState extends State<Pintar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: Text('Hello GOT'),
+            child: Text('Hello Bienvenido'),
           ),
+          RaisedButton(child: Text("Ir a al Home"), onPressed: () => {
+            Navigator.push(context, MaterialPageRouter(build(context)=> HomeScreen()))
+          })
         ],
       ),
     );
