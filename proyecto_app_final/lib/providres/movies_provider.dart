@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:proyecto_app_final/helpers/debouncer.dart';
 import 'package:proyecto_app_final/models/credits.dart';
+import 'package:proyecto_app_final/models/Top_rated.dart';
 import 'package:proyecto_app_final/models/model.dart';
 import 'package:proyecto_app_final/models/popular.dart';
 import 'package:http/http.dart' as http;
@@ -97,5 +98,16 @@ class MoviesProvider extends ChangeNotifier {
     });
 
     Future.delayed(Duration(milliseconds: 301)).then((_) => timer.cancel());
+  }
+
+  Future<List<Cast>> getMovieTop(int movieId) async {
+    if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+
+    final jsonData = await this._getJsonData('3/movie/$movieId/top_rated');
+    final creditsResponse = TopRated.fromJson(jsonData);
+
+    moviesCast[movieId] = creditsResponse.cast;
+
+    return creditsResponse.cast;
   }
 }

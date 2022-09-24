@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:proyecto_app_final/models/model.dart';
-
 class TopRated {
   TopRated({
     required this.page,
@@ -15,19 +13,16 @@ class TopRated {
   });
 
   int page;
-  List<Movie> results;
+  List<Result> results;
   int totalPages;
   int totalResults;
 
   factory TopRated.fromJson(String str) => TopRated.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory TopRated.fromMap(Map<String, dynamic> json) => TopRated(
         page: json["page"] == null ? null : json["page"],
-        results: json["results"] == null
-            ? null
-            : List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
+        results:
+            List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
         totalPages: json["total_pages"] == null ? null : json["total_pages"],
         totalResults:
             json["total_results"] == null ? null : json["total_results"],
@@ -69,15 +64,11 @@ class Result {
 
   factory Result.fromJson(String str) => Result.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory Result.fromMap(Map<String, dynamic> json) => Result(
         adult: json["adult"] == null ? null : json["adult"],
         backdropPath:
             json["backdrop_path"] == null ? null : json["backdrop_path"],
-        genreIds: json["genre_ids"] == null
-            ? null
-            : List<int>.from(json["genre_ids"].map((x) => x)),
+        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"] == null ? null : json["id"],
         originalLanguage: json["original_language"] == null
             ? null
@@ -88,9 +79,7 @@ class Result {
         popularity:
             json["popularity"] == null ? null : json["popularity"].toDouble(),
         posterPath: json["poster_path"] == null ? null : json["poster_path"],
-        releaseDate: json["release_date"] == null
-            ? null
-            : DateTime.parse(json["release_date"]),
+        releaseDate: DateTime.parse(json["release_date"]),
         title: json["title"] == null ? null : json["title"],
         video: json["video"] == null ? null : json["video"],
         voteAverage: json["vote_average"] == null

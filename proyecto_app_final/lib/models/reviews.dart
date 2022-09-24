@@ -3,7 +3,6 @@
 //     final reviews = reviewsFromMap(jsonString);
 
 import 'dart:convert';
-
 import 'package:proyecto_app_final/models/model.dart';
 
 class Reviews {
@@ -11,38 +10,30 @@ class Reviews {
     required this.id,
     required this.page,
     required this.results,
+    required this.cast,
     required this.totalPages,
     required this.totalResults,
   });
 
   int id;
   int page;
-  List<Movie> results;
+  List<Cast> cast;
+  List<Result> results;
   int totalPages;
   int totalResults;
 
   factory Reviews.fromJson(String str) => Reviews.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory Reviews.fromMap(Map<String, dynamic> json) => Reviews(
         id: json["id"] == null ? null : json["id"],
         page: json["page"] == null ? null : json["page"],
-        results: json["results"] == null
-            ? null
-            : List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
+        results:
+            List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
         totalPages: json["total_pages"] == null ? null : json["total_pages"],
         totalResults:
             json["total_results"] == null ? null : json["total_results"],
+        cast: List<Cast>.from(json["cast"].map((x) => Cast.fromMap(x))),
       );
-
-  Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "page": page == null ? null : page,
-        "results": results == null,
-        "total_pages": totalPages == null ? null : totalPages,
-        "total_results": totalResults == null ? null : totalResults,
-      };
 }
 
 class Result {
@@ -66,19 +57,13 @@ class Result {
 
   factory Result.fromJson(String str) => Result.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
   factory Result.fromMap(Map<String, dynamic> json) => Result(
         author: json["author"] == null ? null : json["author"],
-        authorDetails: json["author_details"] == null
-            ? null
-            : AuthorDetails.fromMap(json["author_details"]),
+        authorDetails: AuthorDetails.fromMap(json["author_details"]),
         content: json["content"] == null ? null : json["content"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
         id: json["id"] == null ? null : json["id"],
-        updatedAt: json["updated_at"] == null,
+        updatedAt: DateTime.parse(json["updated_at"]),
         url: json["url"] == null ? null : json["url"],
       );
 }
@@ -98,8 +83,6 @@ class AuthorDetails {
 
   factory AuthorDetails.fromJson(String str) =>
       AuthorDetails.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
 
   factory AuthorDetails.fromMap(Map<String, dynamic> json) => AuthorDetails(
         name: json["name"] == null ? null : json["name"],
