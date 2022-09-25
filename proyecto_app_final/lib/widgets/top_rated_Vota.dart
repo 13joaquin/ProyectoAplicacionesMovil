@@ -13,9 +13,9 @@ class TopScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SfTreemap(
-        dataCount: Movie(voteAverage: voteAverage, voteCount: voteCount).length,
+        dataCount: Movie,
         weightValueMapper: (int index) {
-          return _MovieListState[index].totalVoters;
+          return Movie[index].totalVoters;
         },
         colorMappers: _colorMappers,
         levels: [
@@ -31,7 +31,7 @@ class TopScreen extends StatelessWidget {
                 );
               },
               colorValueMapper: (TreemapTile tile) {
-                return _MovieListState[tile.indices[0]].party;
+                return Movie[tile.indices[0]].party;
               },
 
               // Enable the tooltip.
@@ -47,9 +47,7 @@ class TopScreen extends StatelessWidget {
                         ),
                         TextSpan(
                           text: 'nWon percentage : ' +
-                              __MovieListState[tile.indices[0]]
-                                  .percentage
-                                  .toString() +
+                              Movie[tile.indices[0]].percentage.toString() +
                               '%',
                         ),
                       ])),
